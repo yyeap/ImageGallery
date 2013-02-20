@@ -95,7 +95,7 @@ public class ImageActivity extends Activity {
 		protected void onPostExecute(Bitmap bitmap) {
 			progressDialog.cancel();
 
-			ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
+			TouchImageView imageView = (TouchImageView) findViewById(R.id.full_image_view);
 			imageView.setImageBitmap(bitmap);
 
 			Intent intent = getIntent();
