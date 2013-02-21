@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.List;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ public class ImageAdapter extends BaseAdapter {
 	private List<String> imageUrl;
 	private ImageDownloader imageDownloader;
 
+	// Constructor
 	public ImageAdapter(Context c, List<String> imageUrl, ImageDownloader imageDownloader){
 		this.mContext = c;
 		this.imageUrl = imageUrl;

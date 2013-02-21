@@ -1,3 +1,10 @@
+/**
+ * CS 407 Assignment 1
+ * 
+ * Yuen Lye Yeap yyeap@wisc.edu
+ * CS login: yuen
+ * Platform: Android
+ */
 package com.example.imagegallery;
 
 import java.io.BufferedInputStream;
@@ -22,26 +29,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 	private static final int CONNECTION_TIMEOUT = 60000; // one minute timeout
 	private static final int DATARETRIEVAL_TIMEOUT = 60000;
-	private static final String TAG = "MainActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
 		// Get GridView from xml 
 		GridView gridView = (GridView) findViewById(R.id.grid_view); 
 
-		// Get images
+		// Populate image list
 		final List<Image> images = getImages();
 
 		// Get the url of each images
@@ -69,7 +71,7 @@ public class MainActivity extends Activity {
 		// Set Adapter for GridView 
 		gridView.setAdapter(new ImageAdapter(this, imageUrl, imageDownloader));
 
-		// On Click event for Single GridView Item 
+		// On Click event for full image view 
 		gridView.setOnItemClickListener(new OnItemClickListener(){
 			@SuppressLint("NewApi")
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id)
@@ -101,6 +103,7 @@ public class MainActivity extends Activity {
 			for (int i = 0; i < results.length(); i++) {
 				JSONObject data = results.getJSONObject(i);
 
+				// Extract metadata from json
 				String imageURL = data.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
 				String thumbNailsURL = data.getJSONObject("images").getJSONObject("thumbnail").getString("url");
 				JSONObject caption = data.getJSONObject("caption");

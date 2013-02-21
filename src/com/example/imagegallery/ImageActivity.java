@@ -1,12 +1,9 @@
 package com.example.imagegallery;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,10 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ImageActivity extends Activity {
@@ -27,19 +22,17 @@ public class ImageActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.full_image);
 
-		// instantiate it within the onCreate method
+		// Instantiate download progress bar
 		progressDialog = new ProgressDialog(ImageActivity.this);
 		progressDialog.setMessage("Fetching image");
 		progressDialog.setIndeterminate(false);
 		progressDialog.setMax(100);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
-
 		Intent i = getIntent();
-		// Get Image ID from the passed intent
 		String url = i.getExtras().getString("image");
 
-		//download image async
+		// Initiate asynchronous image download
 		DownloadFile downloadFile = new DownloadFile();
 		downloadFile.execute(url);
 	}
@@ -82,9 +75,9 @@ public class ImageActivity extends Activity {
 			for(int i = 0; i < progress.length; i++){
 				progressDialog.setProgress(progress[i]);
 				
-				// make a pause between progress update to have a smoother visual effect
+				// make a short pause between progress update for smoother visual effect
 				try {
-					Thread.sleep(200);
+					Thread.sleep(150);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -98,11 +91,13 @@ public class ImageActivity extends Activity {
 			TouchImageView imageView = (TouchImageView) findViewById(R.id.full_image_view);
 			imageView.setImageBitmap(bitmap);
 
+			// Parse metadata from intent
 			Intent intent = getIntent();
 			int numLikes = intent.getExtras().getInt("likes");
 			String caption = intent.getExtras().getString("caption");
 			String creator = intent.getExtras().getString("createdBy");
 
+			// Populate metadata on full image view
 			TextView text = (TextView) findViewById(R.id.caption);
 			text.setText(caption);
 
